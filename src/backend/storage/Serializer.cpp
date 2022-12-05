@@ -19,18 +19,7 @@ void to_json(nlohmann::json& j, const SettingsData& d) {
         {"weatherLong", d.weatherLong},
         {"openWeatherApiKey", d.openWeatherApiKey},
 
-        {"devices", d.devices},
-
-        {"hassIp", d.hassIp},
-        {"hassPort", d.hassPort},
-        {"hassBearerToken", d.hassBearerToken},
-        {"hassLights", d.hassLights},
-
-        {"lightningMapCenterLat", d.lightningMapCenterLat},
-        {"lightningMapCenterLong", d.lightningMapCenterLong},
-        {"lightningMapHomeLat", d.lightningMapHomeLat},
-        {"lightningMapHomeLong", d.lightningMapHomeLong},
-        {"lightningMapZoomLevel", d.lightningMapZoomLevel}};
+        {"canteenId", d.canteenId}};
 }
 
 void from_json(const nlohmann::json& j, SettingsData& d) {
@@ -46,18 +35,7 @@ void from_json(const nlohmann::json& j, SettingsData& d) {
     j.at("weatherLong").get_to(d.weatherLong);
     j.at("openWeatherApiKey").get_to(d.openWeatherApiKey);
 
-    j.at("devices").get_to(d.devices);
-
-    j.at("hassIp").get_to(d.hassIp);
-    j.at("hassPort").get_to(d.hassPort);
-    j.at("hassBearerToken").get_to(d.hassBearerToken);
-    j.at("hassLights").get_to(d.hassLights);
-
-    j.at("lightningMapCenterLat").get_to(d.lightningMapCenterLat);
-    j.at("lightningMapCenterLong").get_to(d.lightningMapCenterLong);
-    j.at("lightningMapHomeLat").get_to(d.lightningMapHomeLat);
-    j.at("lightningMapHomeLong").get_to(d.lightningMapHomeLong);
-    j.at("lightningMapZoomLevel").get_to(d.lightningMapZoomLevel);
+    j.at("canteenId").get_to(d.canteenId);
 }
 }  // namespace backend::storage
 

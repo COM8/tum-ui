@@ -80,7 +80,7 @@ void SettingsWidget::prep_widget() {
 
     Gtk::Label* weatherLatLabel = Gtk::make_managed<Gtk::Label>();
     weatherLatLabel->set_text("Latitude:");
-    weatherLatLabel->set_margin_top(10);
+    weatherLatLabel->set_margin_top(5);
     weatherLatLabel->set_halign(Gtk::Align::START);
     contentBox->append(*weatherLatLabel);
     weatherLat.set_placeholder_text("48.137154");
@@ -101,6 +101,21 @@ void SettingsWidget::prep_widget() {
     contentBox->append(*openWeatherApiKeyLabel);
     openWeatherApiKey.set_placeholder_text("API Key");
     contentBox->append(openWeatherApiKey);
+
+    // eat-api:
+    Gtk::Label* eatApiSectionLabel = Gtk::make_managed<Gtk::Label>();
+    eatApiSectionLabel->set_markup("<span font_weight='bold'>eat-api</span>");
+    eatApiSectionLabel->set_halign(Gtk::Align::START);
+    eatApiSectionLabel->set_margin_top(10);
+    contentBox->append(*eatApiSectionLabel);
+
+    Gtk::Label* canteenIdLabel = Gtk::make_managed<Gtk::Label>();
+    canteenIdLabel->set_text("Canteen ID:");
+    canteenIdLabel->set_margin_top(5);
+    canteenIdLabel->set_halign(Gtk::Align::START);
+    contentBox->append(*canteenIdLabel);
+    canteenId.set_placeholder_text("mensa-garching");
+    contentBox->append(canteenId);
 }
 
 void SettingsWidget::load_settings() {
@@ -117,6 +132,8 @@ void SettingsWidget::load_settings() {
     weatherLat.set_text(settings->weatherLat);
     weatherLong.set_text(settings->weatherLong);
     openWeatherApiKey.set_text(settings->openWeatherApiKey);
+
+    canteenId.set_text(settings->canteenId);
     SPDLOG_INFO("Settings loaded.");
 }
 
@@ -134,6 +151,8 @@ void SettingsWidget::save_settings() {
     settings->weatherLat = weatherLat.get_text();
     settings->weatherLong = weatherLong.get_text();
     settings->openWeatherApiKey = openWeatherApiKey.get_text();
+
+    settings->canteenId = canteenId.get_text();
     backend::storage::get_settings_instance()->write_settings();
     SPDLOG_INFO("Settings saved.");
 }

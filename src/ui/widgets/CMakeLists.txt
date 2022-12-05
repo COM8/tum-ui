@@ -7,6 +7,10 @@ add_library(ui_widgets STATIC MvgWidget.cpp
                               DepartureWidget.cpp
                               DepartureWidget.hpp
                               SettingsWidget.cpp
-                              SettingsWidget.hpp)
+                              SettingsWidget.hpp
+                              CanteenWidget.cpp
+                              CanteenWidget.hpp
+                              DishWidget.cpp
+                              DishWidget.cpp)
 target_link_libraries(ui_widgets PUBLIC PkgConfig::GTKMM backend_mvg backend_weather
-                                 PRIVATE logger backend_storage ui_utils re2::re2)
+                                 PRIVATE logger backend_storage ui_utils re2::re2 backend_eatApi)

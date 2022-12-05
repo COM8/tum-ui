@@ -22,7 +22,7 @@ std::vector<std::shared_ptr<Departure>> parse_response(const std::string& respon
 
         // Departures:
         if (!j.contains("departures")) {
-            SPDLOG_ERROR("Failed to parse departures. 'departures' filed missing.");
+            SPDLOG_ERROR("Failed to parse departures. 'departures' field missing.");
             SPDLOG_DEBUG("Response: {}", response);
             return std::vector<std::shared_ptr<Departure>>();
         }

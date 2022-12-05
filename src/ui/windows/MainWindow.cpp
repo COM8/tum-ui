@@ -58,9 +58,12 @@ void MainWindow::prep_overview_stack_page(Gtk::Stack* stack) {
     mainBox->append(*leftBox);
     leftBox->set_homogeneous(false);
     leftBox->set_vexpand(true);
+    canteen.set_vexpand(true);
+    canteen.set_margin_bottom(10);
+    leftBox->append(canteen);
     Gtk::Box* leftBottomBox = Gtk::make_managed<Gtk::Box>(Gtk::Orientation::VERTICAL);
     leftBox->append(*leftBottomBox);
-    leftBottomBox->set_vexpand(true);
+    leftBottomBox->set_vexpand(false);
     leftBottomBox->set_valign(Gtk::Align::END);
 
     // Quick actions:

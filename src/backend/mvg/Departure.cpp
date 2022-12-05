@@ -11,7 +11,7 @@
 namespace backend::mvg {
 std::shared_ptr<Departure> Departure::from_json(const nlohmann::json& j) {
     if (!j.contains("departureTime")) {
-        SPDLOG_ERROR("Failed to parse departure. 'departureTime' filed missing.");
+        SPDLOG_ERROR("Failed to parse departure. 'departureTime' field missing.");
         return nullptr;
     }
     int64_t departureTime = 0;  // In ms Unix time
@@ -19,7 +19,7 @@ std::shared_ptr<Departure> Departure::from_json(const nlohmann::json& j) {
     std::chrono::system_clock::time_point departureTimeTp = std::chrono::system_clock::from_time_t(static_cast<time_t>(departureTime / 1000));
 
     if (!j.contains("product")) {
-        SPDLOG_ERROR("Failed to parse departure. 'product' filed missing.");
+        SPDLOG_ERROR("Failed to parse departure. 'product' field missing.");
         return nullptr;
     }
     std::string product;
@@ -38,14 +38,14 @@ std::shared_ptr<Departure> Departure::from_json(const nlohmann::json& j) {
     }
 
     if (!j.contains("label")) {
-        SPDLOG_ERROR("Failed to parse departure. 'label' filed missing.");
+        SPDLOG_ERROR("Failed to parse departure. 'label' field missing.");
         return nullptr;
     }
     std::string label;
     j.at("label").get_to(label);
 
     if (!j.contains("destination")) {
-        SPDLOG_ERROR("Failed to parse departure. 'destination' filed missing.");
+        SPDLOG_ERROR("Failed to parse departure. 'destination' field missing.");
         return nullptr;
     }
     std::string destination;
@@ -58,21 +58,21 @@ std::shared_ptr<Departure> Departure::from_json(const nlohmann::json& j) {
     }
 
     if (!j.contains("cancelled")) {
-        SPDLOG_ERROR("Failed to parse departure. 'cancelled' filed missing.");
+        SPDLOG_ERROR("Failed to parse departure. 'cancelled' field missing.");
         return nullptr;
     }
     bool cancelled = false;
     j.at("cancelled").get_to(cancelled);
 
     if (!j.contains("lineBackgroundColor")) {
-        SPDLOG_ERROR("Failed to parse departure. 'lineBackgroundColor' filed missing.");
+        SPDLOG_ERROR("Failed to parse departure. 'lineBackgroundColor' field missing.");
         return nullptr;
     }
     std::string lineBackgroundColor;
     j.at("lineBackgroundColor").get_to(lineBackgroundColor);
 
     if (!j.contains("platform")) {
-        SPDLOG_ERROR("Failed to parse departure. 'platform' filed missing.");
+        SPDLOG_ERROR("Failed to parse departure. 'platform' field missing.");
         return nullptr;
     }
     std::string platform;
@@ -80,7 +80,7 @@ std::shared_ptr<Departure> Departure::from_json(const nlohmann::json& j) {
 
     // Is of type array:
     // if (!j.contains("infoMessages")) {
-    //     SPDLOG_ERROR("Failed to parse departure. 'infoMessages' filed missing.");
+    //     SPDLOG_ERROR("Failed to parse departure. 'infoMessages' field missing.");
     //     return nullptr;
     // }
     // std::string infoMessages;

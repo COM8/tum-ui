@@ -21,7 +21,7 @@ struct SettingsData {
     bool mvgSBahnEnabled = true;
     bool mvgUBahnEnabled = true;
     std::string mvgDestRegex{"Garching, Forschungszentrum"};
-    bool mvgDestRegexEnabled = true;
+    bool mvgDestRegexEnabled = false;
 
     /**
      * The open weather map location for the weather forecast. 
@@ -31,26 +31,9 @@ struct SettingsData {
     std::string openWeatherApiKey{"https://openweathermap.org/price"};
 
     /**
-     * A list of all device IPs there status should be displayed.
+     * eat-api configuration for the selected canteen.
      **/
-    std::vector<std::string> devices;
-
-    /**
-     * The Home Assistent (hass) configuration and devices.
-     **/
-    std::string hassIp{"IP of your hass installation"};
-    std::string hassPort{"8123"};
-    std::string hassBearerToken{"Your hass bearer token"};
-    std::vector<std::string> hassLights;
-
-    /**
-     * Lightning map configuration.
-     **/
-    double lightningMapCenterLat{48.137154};
-    double lightningMapCenterLong{11.576124};
-    double lightningMapHomeLat{48.137154};
-    double lightningMapHomeLong{11.576124};
-    double lightningMapZoomLevel{11};
+    std::string canteenId{"mensa-garching"};
 
 } __attribute__((aligned(128)));
 

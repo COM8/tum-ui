@@ -19,6 +19,8 @@ class SettingsWidget : public Gtk::Box {
     Gtk::Entry weatherLong;
     Gtk::Entry openWeatherApiKey;
 
+    Gtk::Entry canteenId;
+
  public:
     SettingsWidget();
     SettingsWidget(SettingsWidget&&) = default;
