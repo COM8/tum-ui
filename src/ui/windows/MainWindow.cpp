@@ -96,6 +96,7 @@ void MainWindow::prep_overview_stack_page(Gtk::Stack* stack) {
     rightBox->set_homogeneous(true);
     mainBox->append(*rightBox);
     // MVG:
+    mvg.set_margin_top(10);
     rightBox->append(mvg);
 
     // Weather:

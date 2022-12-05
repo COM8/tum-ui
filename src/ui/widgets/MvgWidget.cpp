@@ -40,8 +40,9 @@ void MvgWidget::prep_widget() {
 
     // Transparent background:
     Glib::RefPtr<Gtk::CssProvider> provider = Gtk::CssProvider::create();
-    departureslistBox.get_style_context()->add_provider(provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    departureslistBox.add_css_class("transparent-background");
+    departureslistBox.add_css_class("boxed-list");
+    departureslistBox.set_margin_start(10);
+    departureslistBox.set_margin_end(10);
 
     scroll->set_child(departureslistBox);
     scroll->set_vexpand(true);
@@ -63,7 +64,6 @@ void MvgWidget::update_departures_ui() {
     }
 
     // Add new items:
-    bool first = true;
     departuresMutex.lock();
     for (const std::shared_ptr<backend::mvg::Departure>& departure : departures) {
         if (settings->data.mvgDestRegexEnabled && !re2::RE2::FullMatch(departure->destination, *reg)) {
@@ -72,10 +72,6 @@ void MvgWidget::update_departures_ui() {
         departureWidgets.emplace_back(departure);
         DepartureWidget* depW = &departureWidgets.back();
         departureslistBox.append(*depW);
-        if (first) {
-            depW->set_margin_top(5);
-            first = false;
-        }
     }
     departuresMutex.unlock();
 }
