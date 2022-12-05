@@ -69,36 +69,6 @@ pkg_check_modules(EPOXY epoxy REQUIRED IMPORTED_TARGET)
 pkg_check_modules(ADWAITA REQUIRED libadwaita-1>=1.1.0)
 include_directories(${ADWAITA_INCLUDE_DIRS})
 
-# libshumate
-include(ExternalProject)
-find_program(MESON_PATH meson REQUIRED)
-
-if(MESON_PATH STREQUAL "MESON_PATH-NOTFOUND")
-    message(FATAL_ERROR "meson not found. Please make sure you have meson installed on your system.")
-    return()
-endif()
-
-ExternalProject_Add(shumate_build GIT_REPOSITORY https://gitlab.gnome.org/GNOME/libshumate.git
-                                  GIT_TAG main
-                                  CONFIGURE_COMMAND ${MESON_PATH} "<BINARY_DIR>" "<SOURCE_DIR>" -Dgtk_doc=false
-                                  BUILD_COMMAND cd "<BINARY_DIR>" && ninja
-                                  CONFIGURE_HANDLED_BY_BUILD ON
-                                  INSTALL_COMMAND ""
-                                  COMMENT "Building shumate"
-                                  BUILD_BYPRODUCTS "<BINARY_DIR>/shumate/libshumate-1.0.so")
-
-add_library(libshumate SHARED IMPORTED)
-add_dependencies(libshumate shumate_build)
-
-ExternalProject_Get_Property(shumate_build BINARY_DIR)
-set(SHUMATE_LIB "${BINARY_DIR}/shumate/libshumate-1.0.so")
-set_target_properties(libshumate PROPERTIES IMPORTED_LOCATION ${SHUMATE_LIB})
-
-ExternalProject_Get_Property(shumate_build SOURCE_DIR)
-set(SHUMATE_INCLUDE_DIRS "${SOURCE_DIR}" "${BINARY_DIR}")
-target_include_directories(libshumate INTERFACE "${SHUMATE_INCLUDE_DIRS}")
-include_directories(${SHUMATE_INCLUDE_DIRS})
-
 # Disable linting for fetch content projects
 clear_variable(DESTINATION CMAKE_CXX_CLANG_TIDY BACKUP CMAKE_CXX_CLANG_TIDY_BKP)
 
