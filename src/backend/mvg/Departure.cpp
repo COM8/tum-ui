@@ -5,7 +5,6 @@
 #include <cstdint>
 #include <ctime>
 #include <memory>
-#include <bits/types/time_t.h>
 #include <spdlog/spdlog.h>
 
 namespace backend::mvg {

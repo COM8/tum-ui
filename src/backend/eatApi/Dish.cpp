@@ -4,7 +4,6 @@
 #include <chrono>
 #include <memory>
 #include <vector>
-#include <bits/chrono.h>
 
 namespace backend::eatApi {
 std::shared_ptr<Dish> Dish::from_json(const nlohmann::json& j) {

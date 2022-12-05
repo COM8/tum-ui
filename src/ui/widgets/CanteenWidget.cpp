@@ -15,7 +15,6 @@
 #include <optional>
 #include <thread>
 #include <vector>
-#include <bits/chrono.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/cssprovider.h>
 #include <gtkmm/enums.h>
