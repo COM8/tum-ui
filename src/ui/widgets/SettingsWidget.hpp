@@ -8,6 +8,7 @@ namespace ui::widgets {
 class SettingsWidget : public Gtk::Box {
  private:
     Gtk::CheckButton mvgBusCBtn{"Bus"};
+    Gtk::CheckButton mvgRegionalBusCBtn{"Regional Bus"};
     Gtk::CheckButton mvgUbanCBtn{"U-Bahn"};
     Gtk::CheckButton mvgSbahnCBtn{"S-Bahn"};
     Gtk::CheckButton mvgTramCBtn{"Tram"};

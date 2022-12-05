@@ -52,6 +52,8 @@ void SettingsWidget::prep_widget() {
     productGrid->append(mvgSbahnCBtn);
     mvgBusCBtn.set_active(true);
     productGrid->append(mvgBusCBtn);
+    mvgRegionalBusCBtn.set_active(true);
+    productGrid->append(mvgRegionalBusCBtn);
     mvgTramCBtn.set_active(true);
     productGrid->append(mvgTramCBtn);
     contentBox->append(*productGrid);
@@ -122,6 +124,7 @@ void SettingsWidget::load_settings() {
     SPDLOG_INFO("Loading settings...");
     const backend::storage::SettingsData* settings = &(backend::storage::get_settings_instance()->data);
     mvgBusCBtn.set_active(settings->mvgBusEnabled);
+    mvgRegionalBusCBtn.set_active(settings->mvgRegionalBusEnabled);
     mvgUbanCBtn.set_active(settings->mvgUBahnEnabled);
     mvgSbahnCBtn.set_active(settings->mvgSBahnEnabled);
     mvgTramCBtn.set_active(settings->mvgTramEnabled);
@@ -141,6 +144,7 @@ void SettingsWidget::save_settings() {
     SPDLOG_INFO("Saving settings...");
     backend::storage::SettingsData* settings = &(backend::storage::get_settings_instance()->data);
     settings->mvgBusEnabled = mvgBusCBtn.get_active();
+    settings->mvgRegionalBusEnabled = mvgRegionalBusCBtn.get_active();
     settings->mvgUBahnEnabled = mvgUbanCBtn.get_active();
     settings->mvgSBahnEnabled = mvgSbahnCBtn.get_active();
     settings->mvgTramEnabled = mvgTramCBtn.get_active();

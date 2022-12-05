@@ -9,6 +9,7 @@ void to_json(nlohmann::json& j, const SettingsData& d) {
     j = nlohmann::json{
         {"mvgLocation", d.mvgLocation},
         {"mvgBusEnabled", d.mvgBusEnabled},
+        {"mvgRegionalBusEnabled", d.mvgRegionalBusEnabled},
         {"mvgSBahnEnabled", d.mvgSBahnEnabled},
         {"mvgUBahnEnabled", d.mvgUBahnEnabled},
         {"mvgTramEnabled", d.mvgTramEnabled},
@@ -25,6 +26,7 @@ void to_json(nlohmann::json& j, const SettingsData& d) {
 void from_json(const nlohmann::json& j, SettingsData& d) {
     j.at("mvgLocation").get_to(d.mvgLocation);
     j.at("mvgBusEnabled").get_to(d.mvgBusEnabled);
+    j.at("mvgRegionalBusEnabled").get_to(d.mvgRegionalBusEnabled);
     j.at("mvgSBahnEnabled").get_to(d.mvgSBahnEnabled);
     j.at("mvgUBahnEnabled").get_to(d.mvgUBahnEnabled);
     j.at("mvgTramEnabled").get_to(d.mvgTramEnabled);

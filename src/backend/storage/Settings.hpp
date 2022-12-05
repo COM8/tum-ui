@@ -17,6 +17,7 @@ struct SettingsData {
      **/
     std::string mvgLocation{"de:09184:460"};
     bool mvgBusEnabled = true;
+    bool mvgRegionalBusEnabled = true;
     bool mvgTramEnabled = true;
     bool mvgSBahnEnabled = true;
     bool mvgUBahnEnabled = true;

@@ -33,6 +33,8 @@ std::shared_ptr<Departure> Departure::from_json(const nlohmann::json& j) {
         pType = ProductType::BUS;
     } else if (product == "TRAM") {
         pType = ProductType::TRAM;
+    } else if (product == "REGIONAL_BUS") {
+        pType = ProductType::REGIONAL_BUS;
     } else {
         SPDLOG_WARN("Unknown MVG product type '{}'.", product);
     }
