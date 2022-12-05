@@ -13,9 +13,9 @@ namespace backend::storage {
 struct SettingsData {
     /**
      * The location id, where the MVG widget should fetch departures for.
-     * Default value: "de:09162:530" (München Alte Heide)
+     * Default value: "de:09184:460" (Garching Forschungszentrum)
      **/
-    std::string mvgLocation{"de:09162:530"};
+    std::string mvgLocation{"de:09184:460"};
     bool mvgBusEnabled = true;
     bool mvgTramEnabled = true;
     bool mvgSBahnEnabled = true;
@@ -26,8 +26,8 @@ struct SettingsData {
     /**
      * The open weather map location for the weather forecast. 
      **/
-    std::string weatherLat{"48.137154"};
-    std::string weatherLong{"11.576124"};
+    std::string weatherLat{"48.2617389"};
+    std::string weatherLong{"11.6684135"};
     std::string openWeatherApiKey{"https://openweathermap.org/price"};
 
     /**

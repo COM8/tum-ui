@@ -60,7 +60,7 @@ void SettingsWidget::prep_widget() {
     mvgLocationLabel->set_margin_top(10);
     mvgLocationLabel->set_halign(Gtk::Align::START);
     contentBox->append(*mvgLocationLabel);
-    mvgLocation.set_placeholder_text("de:09162:530");
+    mvgLocation.set_placeholder_text("de:09184:460");
     contentBox->append(mvgLocation);
     Gtk::Label* mvgDestRegexLabel = Gtk::make_managed<Gtk::Label>();
     mvgDestRegexLabel->set_text("Destination regex:");
