@@ -1,5 +1,5 @@
 # Tum-UI
-GTK4 Based UI for home automation using a Raspberry Pi.
+GTK4 Based UI for TUM related canteen and MVG information. Intended to be run on a Raspberry PI as an office status display.
 
 ## Examples
 ![Overview in dark mode](images/overview_dark.png)
