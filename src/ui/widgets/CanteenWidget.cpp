@@ -73,17 +73,12 @@ void CanteenWidget::update_dishes_ui() {
     dishWidgets.clear();
 
     // Add new items:
-    bool first = true;
     dishesMutex.lock();
     if (menu) {
         for (const std::shared_ptr<backend::eatApi::Dish>& dish : menu->dishes) {
             dishWidgets.emplace_back(dish, &labels);
             DishWidget* dishW = &dishWidgets.back();
             dishesListBox.append(*dishW);
-            if (first) {
-                dishW->set_margin_top(5);
-                first = false;
-            }
         }
     }
 
