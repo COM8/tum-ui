@@ -19,9 +19,9 @@ modules:
     buildsystem: cmake-ninja
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
-      - -Dtum_ui_STATIC_ANALYZE=OFF
-      - -Dtum_ui_ENABLE_LINTING=OFF
-      - -Dtum_ui_FLATPAK_BUILD=ON
+      - -DTUM_UI_STATIC_ANALYZE=OFF
+      - -DTUM_UI_ENABLE_LINTING=OFF
+      - -DTUM_UI_FLATPAK_BUILD=ON
     sources:
       - type: dir
         path: .
