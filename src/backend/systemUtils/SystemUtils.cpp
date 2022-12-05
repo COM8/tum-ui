@@ -7,6 +7,7 @@
 #include <string>
 #include <spdlog/spdlog.h>
 
+namespace backend::systemUtils {
 void activate_screensaver() {
 #ifdef HOME_UI_FLATPAK_BUILD
     const std::filesystem::path xdgPath = "/var/run/host/usr/bin/xdg-screensaver activate";
