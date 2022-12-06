@@ -117,6 +117,7 @@ void SettingsWidget::prep_widget() {
     canteenIdLabel->set_halign(Gtk::Align::START);
     contentBox->append(*canteenIdLabel);
     canteenId.set_placeholder_text("mensa-garching");
+    canteenId.set_margin_bottom(10);
     contentBox->append(canteenId);
 }
 
