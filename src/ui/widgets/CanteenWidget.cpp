@@ -13,6 +13,7 @@
 #include <cstddef>
 #include <memory>
 #include <optional>
+#include <string>
 #include <thread>
 #include <vector>
 #include <gtkmm/checkbutton.h>
@@ -81,7 +82,10 @@ void CanteenWidget::update_dishes_ui() {
         }
     }
 
-    canteenNameLbl.set_markup(canteen ? "<span font_weight='bold'>" + canteen->name + "</span>" : "Canteen not found!");
+    std::chrono::sys_days sysDays(menu->date);
+    std::chrono::system_clock::time_point tp(sysDays);
+    std::string date = menu ? (std::to_string(static_cast<unsigned>(menu->date.day())) + "." + std::to_string(static_cast<unsigned>(menu->date.month())) + "." + std::to_string(static_cast<int>(menu->date.year()))) : "";
+    canteenNameLbl.set_markup(canteen ? "<span font_weight='bold'>" + canteen->name + " - " + date + "</span>" : "Canteen not found!");
     const std::optional<backend::eatApi::OpeningHours> openingHours = canteen ? canteen->get_current_opening_hours() : std::nullopt;
     if (openingHours) {
         canteenOpeningHoursLbl.set_text(openingHours->start + " - " + openingHours->end);
@@ -141,14 +145,22 @@ void CanteenWidget::update_dishes() {
     std::shared_ptr<backend::eatApi::Menu> curMenu;
     try {
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
-        iso_week::year_weeknum_weekday yww{date::floor<date::days>(now)};
 
-        std::vector<std::shared_ptr<backend::eatApi::Menu>> menus = backend::eatApi::request_dishes(settings->data.canteenId, yww.year(), yww.weeknum());
+        // Show the dishes for tomorrow in case it is past 4pm:
+        std::chrono::hh_mm_ss time{std::chrono::floor<std::chrono::milliseconds>(now - std::chrono::floor<date::days>(now))};
+        if (time.hours() >= std::chrono::hours(16)) {
+            now += std::chrono::days(1);
+        }
+
         std::chrono::year_month_day ymd{std::chrono::floor<date::days>(now)};
-        for (const std::shared_ptr<backend::eatApi::Menu>& menu : menus) {
-            if (menu->date >= ymd && (!curMenu || curMenu->date > menu->date)) {
-                curMenu = menu;
-            }
+
+        curMenu = request_menu(settings->data.canteenId, ymd);
+        // Retry for the next week in case there are no dishes for this week:
+        if (!curMenu) {
+            std::chrono::sys_days sysDays(ymd);
+            sysDays += std::chrono::days(1);
+            ymd = std::chrono::year_month_day(sysDays);
+            curMenu = request_menu(settings->data.canteenId, ymd);
         }
     } catch (const std::exception& e) {
         SPDLOG_ERROR("Failed to update dishes with: {}", e.what());
@@ -170,6 +182,18 @@ void CanteenWidget::update_dishes() {
     this->menu = curMenu;
     dishesMutex.unlock();
     disp.emit();
+}
+
+std::shared_ptr<backend::eatApi::Menu> CanteenWidget::request_menu(const std::string& canteenId, std::chrono::year_month_day date) {
+    iso_week::year_weeknum_weekday yww(std::chrono::sys_days{date});
+    std::shared_ptr<backend::eatApi::Menu> curMenu;
+    std::vector<std::shared_ptr<backend::eatApi::Menu>> menus = backend::eatApi::request_dishes(canteenId, yww.year(), yww.weeknum());
+    for (const std::shared_ptr<backend::eatApi::Menu>& menu : menus) {
+        if (menu->date >= date && (!curMenu || curMenu->date > menu->date)) {
+            curMenu = menu;
+        }
+    }
+    return curMenu;
 }
 
 void CanteenWidget::thread_run() {

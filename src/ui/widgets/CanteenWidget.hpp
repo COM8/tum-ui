@@ -45,6 +45,7 @@ class CanteenWidget : public Gtk::Box {
     void stop_thread();
 
     void update_dishes();
+    static std::shared_ptr<backend::eatApi::Menu> request_menu(const std::string& canteenId, std::chrono::year_month_day date);
     void update_dishes_ui();
     void thread_run();
 
