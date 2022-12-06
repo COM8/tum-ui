@@ -65,12 +65,17 @@ void MvgWidget::update_departures_ui() {
 
     // Add new items:
     departuresMutex.lock();
+    bool first = true;
     for (const std::shared_ptr<backend::mvg::Departure>& departure : departures) {
         if (settings->data.mvgDestRegexEnabled && !re2::RE2::FullMatch(departure->destination, *reg)) {
             continue;
         }
         departureWidgets.emplace_back(departure);
         DepartureWidget* depW = &departureWidgets.back();
+        if (first) {
+            depW->set_margin_top(5);
+            first = false;
+        }
         departureslistBox.append(*depW);
     }
     departuresMutex.unlock();
