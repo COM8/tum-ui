@@ -67,7 +67,7 @@ void MvgWidget::update_departures_ui() {
     departuresMutex.lock();
     bool first = true;
     for (const std::shared_ptr<backend::mvg::Departure>& departure : departures) {
-        if (settings->data.mvgDestRegexEnabled && !re2::RE2::FullMatch(departure->destination, *reg)) {
+        if (reg && !re2::RE2::FullMatch(departure->destination, *reg)) {
             continue;
         }
         departureWidgets.emplace_back(departure);
