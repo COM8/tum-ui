@@ -200,7 +200,7 @@ void CanteenWidget::thread_run() {
     SPDLOG_INFO("Departure thread started.");
     while (shouldRun) {
         update_dishes();
-        std::this_thread::sleep_for(std::chrono::seconds(20));
+        std::this_thread::sleep_for(std::chrono::minutes(30));
     }
     SPDLOG_INFO("Departure thread stoped.");
 }
