@@ -201,7 +201,7 @@ void WeatherWidget::thread_run() {
     SPDLOG_INFO("Weather thread started.");
     while (shouldRun) {
         update_weather();
-        std::this_thread::sleep_for(std::chrono::minutes(5));
+        std::this_thread::sleep_for(std::chrono::minutes(10));
     }
     SPDLOG_INFO("Weather thread stoped.");
 }
