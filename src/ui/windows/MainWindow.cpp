@@ -93,14 +93,22 @@ void MainWindow::prep_overview_stack_page(Gtk::Stack* stack) {
     screenBrightnessBtn.signal_value_changed().connect(sigc::ptr_fun(&MainWindow::on_screen_brightness_value_changed));
 
     Gtk::Box* rightBox = Gtk::make_managed<Gtk::Box>(Gtk::Orientation::VERTICAL);
-    rightBox->set_homogeneous(true);
+    Gtk::Box* rightContentBox = Gtk::make_managed<Gtk::Box>(Gtk::Orientation::VERTICAL);
+    rightContentBox->set_homogeneous(true);
+    rightBox->append(*rightContentBox);
     mainBox->append(*rightBox);
     // MVG:
     mvg.set_margin_top(10);
-    rightBox->append(mvg);
+    rightContentBox->append(mvg);
 
     // Weather:
-    rightBox->append(weather);
+    rightContentBox->append(weather);
+
+    // Credits:
+    credits.set_margin_bottom(10);
+    credits.set_valign(Gtk::Align::END);
+    credits.set_halign(Gtk::Align::CENTER);
+    rightBox->append(credits);
 
     stack->add(*mainBox, "overview", "Overview");
 }

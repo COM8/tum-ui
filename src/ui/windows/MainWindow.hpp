@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ui/widgets/CanteenWidget.hpp"
+#include "ui/widgets/CreditsWidget.hpp"
 #include "ui/widgets/MvgWidget.hpp"
 #include "ui/widgets/SettingsWidget.hpp"
 #include "ui/widgets/WeatherWidget.hpp"
@@ -21,6 +22,7 @@ class MainWindow : public Gtk::Window {
     widgets::WeatherWidget weather{};
     widgets::SettingsWidget settings{};
     widgets::CanteenWidget canteen{};
+    widgets::CreditsWidget credits{};
     Gtk::Button fullscreenBtn{};
     Gtk::Button cursorBtn{};
     Gtk::Button screenSaverBtn{};
