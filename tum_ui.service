@@ -1,0 +1,18 @@
+[Unit]
+Description=TUM UI autostart service
+After=network.target
+Wants=network-online.target
+
+[Service]
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+ExecStart=/bin/flatpak run --env=GTK_THEME=Adwaita:dark de.tum_ui.cli
+WorkingDirectory=/root
+Restart=always
+RestartSec=10s
+KillMode=process
+TimeoutSec=infinity
+User=root
+
+[Install]
+WantedBy=graphical.target

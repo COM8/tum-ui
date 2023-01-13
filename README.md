@@ -78,3 +78,16 @@ flatpak uninstall de.tum_ui.cli
 ```
 flatpak run de.tum_ui.cli
 ```
+
+## Autostart
+To enable autostart once the PI starts, a `systemd` service is available.
+
+```bash
+nano /etc/systemd/system/tum_ui.service
+# Fill with the content of the tum_ui.service file located in this repository
+
+systemctl enable tum_ui.service
+```
+
+Once done, restart the PI, the application will start automatically.
+The config file is located in `/root/tum_ui_settings.json` once the application started for the first time.
