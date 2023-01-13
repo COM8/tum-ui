@@ -72,8 +72,9 @@ std::vector<std::shared_ptr<Menu>> parse_dishes_response(const std::string& resp
 }
 
 std::vector<std::shared_ptr<Menu>> request_dishes(const std::string& canteenId, iso_week::year year, iso_week::weeknum week) {
-    SPDLOG_DEBUG("Requesting dishes for canteen '{}', year {} and week number {}...", canteenId, static_cast<int>(year), static_cast<unsigned>(week));
-    cpr::Response response = cpr::Get(cpr::Url{"https://tum-dev.github.io/eat-api/" + canteenId + "/" + std::to_string(static_cast<int>(year)) + "/" + std::to_string(static_cast<unsigned>(week)) + ".json"});
+    unsigned weekU = static_cast<unsigned>(week);
+    SPDLOG_DEBUG("Requesting dishes for canteen '{}', year {} and week number {}...", canteenId, static_cast<int>(year), weekU);
+    cpr::Response response = cpr::Get(cpr::Url{"https://tum-dev.github.io/eat-api/" + canteenId + "/" + std::to_string(static_cast<int>(year)) + "/" + (weekU < 10 ? "0" : "") + std::to_string(weekU) + ".json"});
     if (response.status_code != 200) {
         if (response.error.code == cpr::ErrorCode::OK) {
             SPDLOG_ERROR("Requesting dishes failed. Status code: {}\nResponse: {}", response.status_code, response.text);
