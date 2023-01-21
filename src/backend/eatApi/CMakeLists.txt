@@ -9,7 +9,9 @@ add_library(backend_eatApi STATIC EatApiHelper.cpp
                                   Label.cpp
                                   Label.hpp
                                   iso_week.hpp
-                                  date.hpp)
+                                  date.hpp
+                                  HeadCount.cpp
+                                  HeadCount.hpp)
 
 target_link_libraries(backend_eatApi PRIVATE logger cpr::cpr
                                      PUBLIC nlohmann_json::nlohmann_json)

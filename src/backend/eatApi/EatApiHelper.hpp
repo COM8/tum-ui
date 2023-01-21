@@ -2,6 +2,7 @@
 
 #include "Canteen.hpp"
 #include "Dish.hpp"
+#include "HeadCount.hpp"
 #include "backend/eatApi/Label.hpp"
 #include "backend/eatApi/date.hpp"
 #include "iso_week.hpp"
@@ -15,4 +16,5 @@ namespace backend::eatApi {
 std::vector<std::shared_ptr<Canteen>> request_canteens();
 std::vector<std::shared_ptr<Menu>> request_dishes(const std::string& canteenId, iso_week::year year, iso_week::weeknum week);
 std::unordered_map<std::string, std::shared_ptr<Label>> request_labels();
+std::shared_ptr<HeadCount> request_head_count(const std::string& canteenId);
 }  // namespace backend::eatApi

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CanteenHeadCountWidget.hpp"
 #include "DishWidget.hpp"
 #include "backend/eatApi/Canteen.hpp"
 #include "backend/eatApi/Dish.hpp"
@@ -21,6 +22,7 @@ class CanteenWidget : public Gtk::Box {
     Gtk::Box loadingBox{Gtk::Orientation::VERTICAL};
     Gtk::Label canteenNameLbl{};
     Gtk::Label canteenOpeningHoursLbl{};
+    CanteenHeadCountWidget canteenHeadCount{};
 
     bool shouldRun{false};
     std::unique_ptr<std::thread> updateThread{nullptr};

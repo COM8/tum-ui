@@ -1,6 +1,7 @@
 #include "EatApiHelper.hpp"
 #include "backend/eatApi/Canteen.hpp"
 #include "backend/eatApi/Dish.hpp"
+#include "backend/eatApi/HeadCount.hpp"
 #include "backend/eatApi/Label.hpp"
 #include "backend/eatApi/date.hpp"
 #include "cpr/api.h"
@@ -122,5 +123,34 @@ std::unordered_map<std::string, std::shared_ptr<Label>> request_labels() {
     }
     SPDLOG_DEBUG("Labels requested successfully. Parsing...");
     return parse_labels_response(response.text);
+}
+
+std::shared_ptr<HeadCount> parse_head_count_response(const std::string& response) {
+    std::shared_ptr<HeadCount> result;
+    try {
+        nlohmann::json j = nlohmann::json::parse(response);
+        result = HeadCount::from_json(j);
+        SPDLOG_DEBUG("Head count found: {}", result ? "YES" : "NO");
+        return result;
+
+    } catch (nlohmann::json::parse_error& e) {
+        SPDLOG_ERROR("Error parsing head count from '{}' with: {}", response, e.what());
+        return {};
+    }
+}
+
+std::shared_ptr<HeadCount> request_head_count(const std::string& canteenId) {
+    SPDLOG_DEBUG("Requesting head count...");
+    cpr::Response response = cpr::Get(cpr::Url{"https://api.tum.app/v1/canteen/headCount/" + canteenId});
+    if (response.status_code != 200) {
+        if (response.error.code == cpr::ErrorCode::OK) {
+            SPDLOG_ERROR("Requesting head count failed. Status code: {}\nResponse: {}", response.status_code, response.text);
+        } else {
+            SPDLOG_ERROR("Requesting head count failed. Status code: {}\nError: {}", response.status_code, response.error.message);
+        }
+        return {};
+    }
+    SPDLOG_DEBUG("Head count requested successfully. Parsing...");
+    return parse_head_count_response(response.text);
 }
 }  // namespace backend::eatApi

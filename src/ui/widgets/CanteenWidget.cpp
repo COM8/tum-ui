@@ -46,6 +46,10 @@ void CanteenWidget::prep_widget() {
     append(canteenNameLbl);
     canteenOpeningHoursLbl.set_margin_bottom(5);
     append(canteenOpeningHoursLbl);
+    canteenHeadCount.set_margin_bottom(5);
+    canteenHeadCount.set_margin_start(10);
+    canteenHeadCount.set_margin_end(10);
+    append(canteenHeadCount);
 
     Gtk::ScrolledWindow* scroll = Gtk::make_managed<Gtk::ScrolledWindow>();
     scroll->set_policy(Gtk::PolicyType::NEVER, Gtk::PolicyType::AUTOMATIC);
