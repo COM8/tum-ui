@@ -1,4 +1,4 @@
-# Tum-UI
+# TUM-UI
 GTK4 Based UI for TUM related canteen and MVG information. Intended to be run on a Raspberry PI as an office status display.
 
 ## Examples
@@ -24,7 +24,7 @@ cmake --build .
 ```
 
 ## Flatpak
-The tum-ui can be built and installed using Flatpak.
+The TUM-UI can be built and installed using Flatpak.
 
 ### Requirements
 #### Fedora
@@ -89,5 +89,5 @@ nano /etc/systemd/system/tum_ui.service
 systemctl enable tum_ui.service
 ```
 
-Once done, restart the PI, the application will start automatically.
+Once done, restart the PI, and the application will start automatically.
 The config file is located in `/root/tum_ui_settings.json` once the application started for the first time.
