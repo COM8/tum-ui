@@ -14,7 +14,8 @@ std::shared_ptr<Forecast> parse_response(const std::string& response) {
         nlohmann::json j = nlohmann::json::parse(response);
         return std::make_shared<Forecast>(Forecast::from_json(j));
     } catch (nlohmann::json::parse_error& e) {
-        SPDLOG_ERROR("Error parsing weather from '{}' with: {}", response, e.what());
+        SPDLOG_ERROR("Error parsing weather: {}", e.what());
+        SPDLOG_DEBUG("Response: {}", response);
     }
     return nullptr;
 }

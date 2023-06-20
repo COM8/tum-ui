@@ -62,7 +62,8 @@ std::vector<std::shared_ptr<Departure>> parse_response(const std::string& respon
         return result;
 
     } catch (nlohmann::json::parse_error& e) {
-        SPDLOG_ERROR("Error parsing departures from '{}' with: {}", response, e.what());
+        SPDLOG_ERROR("Error parsing departures: {}", e.what());
+        SPDLOG_DEBUG("Response: {}", response);
     }
     return std::vector<std::shared_ptr<Departure>>();
 }

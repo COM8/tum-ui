@@ -31,7 +31,8 @@ std::vector<std::shared_ptr<Canteen>> parse_canteens_response(const std::string&
         return result;
 
     } catch (nlohmann::json::parse_error& e) {
-        SPDLOG_ERROR("Error parsing canteens from '{}' with: {}", response, e.what());
+        SPDLOG_ERROR("Error parsing canteens: {}", e.what());
+        SPDLOG_DEBUG("Response: {}", response);
         return {};
     }
 }
@@ -67,7 +68,8 @@ std::vector<std::shared_ptr<Menu>> parse_dishes_response(const std::string& resp
         return result;
 
     } catch (nlohmann::json::parse_error& e) {
-        SPDLOG_ERROR("Error parsing dishes from '{}' with: {}", response, e.what());
+        SPDLOG_ERROR("Error parsing dishes: {}", e.what());
+        SPDLOG_DEBUG("Response: {}", response);
         return {};
     }
 }
@@ -105,7 +107,8 @@ std::unordered_map<std::string, std::shared_ptr<Label>> parse_labels_response(co
         return result;
 
     } catch (nlohmann::json::parse_error& e) {
-        SPDLOG_ERROR("Error parsing labels from '{}' with: {}", response, e.what());
+        SPDLOG_ERROR("Error parsing labels: {}", e.what());
+        SPDLOG_DEBUG("Response: {}", response);
         return {};
     }
 }
@@ -134,7 +137,8 @@ std::shared_ptr<HeadCount> parse_head_count_response(const std::string& response
         return result;
 
     } catch (nlohmann::json::parse_error& e) {
-        SPDLOG_ERROR("Error parsing head count from '{}' with: {}", response, e.what());
+        SPDLOG_ERROR("Error parsing head count: {}", e.what());
+        SPDLOG_DEBUG("Response: {}", response);
         return {};
     }
 }
