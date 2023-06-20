@@ -71,8 +71,7 @@ modules:
         sources:
           - type: git
             url: https://github.com/machinezone/IXWebSocket.git
-            tag: v11.4.3
-            commit: e417e636053552c31bf1a435e383034dab665924
+            commit: 688af99747bc109d3476cb3a6703c5e7d37b10d9
       - name: eventpp 
         buildsystem: cmake-ninja
         config-opts:

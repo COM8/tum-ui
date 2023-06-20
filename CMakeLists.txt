@@ -97,7 +97,7 @@ FetchContent_Declare(re2 GIT_REPOSITORY https://github.com/google/re2.git
 FetchContent_MakeAvailable(re2)
 
 FetchContent_Declare(websocket GIT_REPOSITORY https://github.com/machinezone/IXWebSocket.git
-    GIT_TAG v11.4.3)
+    GIT_TAG 688af99747bc109d3476cb3a6703c5e7d37b10d9)
 set(USE_TLS ON)
 set(USE_ZLIB OFF)
 FetchContent_MakeAvailable(websocket)
