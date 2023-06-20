@@ -13,7 +13,33 @@
 
 namespace backend::mvg {
 cpr::Url build_url(const std::string& stationId, bool bus, bool ubahn, bool sbahn, bool tram) {
-    return cpr::Url("https://www.mvg.de/api/fahrinfo/departure/" + stationId + "?footway=0" + "&bus=" + (bus ? "true" : "false") + "&ubahn=" + (ubahn ? "true" : "false") + "&sbahn=" + (sbahn ? "true" : "false") + "&tram=" + (tram ? "true" : "false"));
+    std::string transportTypes;
+    if (bus) {
+        transportTypes += "BUS";
+    }
+
+    if (ubahn) {
+        if (!transportTypes.empty()) {
+            transportTypes += ",";
+        }
+        transportTypes += "UBAHN";
+    }
+
+    if (sbahn) {
+        if (!transportTypes.empty()) {
+            transportTypes += ",";
+        }
+        transportTypes += "SBAHN";
+    }
+
+    if (tram) {
+        if (!transportTypes.empty()) {
+            transportTypes += ",";
+        }
+        transportTypes += "TRAM";
+    }
+
+    return cpr::Url("https://www.mvg.de/api/fib/v2/departure?globalId=" + stationId + "&limit=10" + "&offsetInMinutes=0" + "&transportTypes=" + transportTypes);
 }
 
 std::vector<std::shared_ptr<Departure>> parse_response(const std::string& response) {
@@ -21,14 +47,7 @@ std::vector<std::shared_ptr<Departure>> parse_response(const std::string& respon
         nlohmann::json j = nlohmann::json::parse(response);
 
         // Departures:
-        if (!j.contains("departures")) {
-            SPDLOG_ERROR("Failed to parse departures. 'departures' field missing.");
-            SPDLOG_DEBUG("Response: {}", response);
-            return std::vector<std::shared_ptr<Departure>>();
-        }
-
-        nlohmann::json::array_t array;
-        j.at("departures").get_to(array);
+        nlohmann::json::array_t array = j;
 
         std::vector<std::shared_ptr<Departure>> result{};
         for (const nlohmann::json& jDep : array) {

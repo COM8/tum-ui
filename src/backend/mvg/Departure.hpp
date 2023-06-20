@@ -16,14 +16,14 @@ enum ProductType {
 };
 
 struct Departure {
-    std::chrono::system_clock::time_point time;
+    std::chrono::system_clock::time_point timePlaned;
     ProductType type;
     std::string label;
     std::string destination;
-    int delay;
+    int delayMinutes;
     bool canceled;
     std::string lineBackgroundColor;
-    std::string platform;
+    int platform;
     std::string infoMessage;
 
     static std::shared_ptr<Departure> from_json(const nlohmann::json& j);

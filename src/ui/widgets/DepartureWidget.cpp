@@ -52,8 +52,8 @@ void DepartureWidget::update_departure_ui() {
     // Info:
     if (!departure->canceled) {
         std::string depInfoStr;
-        std::chrono::system_clock::duration diff = departure->time - std::chrono::system_clock::now();
-        diff += std::chrono::minutes(departure->delay);
+        std::chrono::system_clock::duration diff = departure->timePlaned - std::chrono::system_clock::now();
+        diff += std::chrono::minutes(departure->delayMinutes);
         auto minutes = std::chrono::duration_cast<std::chrono::minutes>(diff).count();
 
         if (minutes <= 0) {
@@ -62,16 +62,16 @@ void DepartureWidget::update_departure_ui() {
             depInfoStr += std::to_string(minutes) + " min.";
         }
 
-        if (departure->delay != 0) {
+        if (departure->delayMinutes != 0) {
             depInfoStr += " (";
             depInfoStr += "<span font_weight='bold' foreground='";
-            if (departure->delay > 0) {
+            if (departure->delayMinutes > 0) {
                 depInfoStr += "#8b0000";
             } else {
                 depInfoStr += "#008b00";
             }
             depInfoStr += "'>";
-            depInfoStr += std::to_string(departure->delay);
+            depInfoStr += std::to_string(departure->delayMinutes);
             depInfoStr += "</span>";
             depInfoStr += " min.)";
         }

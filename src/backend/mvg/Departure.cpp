@@ -9,33 +9,39 @@
 
 namespace backend::mvg {
 std::shared_ptr<Departure> Departure::from_json(const nlohmann::json& j) {
-    if (!j.contains("departureTime")) {
-        SPDLOG_ERROR("Failed to parse departure. 'departureTime' field missing.");
+    if (!j.contains("plannedDepartureTime")) {
+        SPDLOG_ERROR("Failed to parse departure. 'plannedDepartureTime' field missing.");
         return nullptr;
     }
-    int64_t departureTime = 0;  // In ms Unix time
-    j.at("departureTime").get_to(departureTime);
-    std::chrono::system_clock::time_point departureTimeTp = std::chrono::system_clock::from_time_t(static_cast<time_t>(departureTime / 1000));
+    int64_t plannedDepartureTime = 0;  // In ms Unix time
+    j.at("plannedDepartureTime").get_to(plannedDepartureTime);
+    std::chrono::system_clock::time_point plannedDepartureTP = std::chrono::system_clock::from_time_t(static_cast<time_t>(plannedDepartureTime / 1000));
 
-    if (!j.contains("product")) {
-        SPDLOG_ERROR("Failed to parse departure. 'product' field missing.");
+    if (!j.contains("transportType")) {
+        SPDLOG_ERROR("Failed to parse departure. 'transportType' field missing.");
         return nullptr;
     }
     std::string product;
-    j.at("product").get_to(product);
+    std::string lineBackgroundColor = "#006cb3";
+    j.at("transportType").get_to(product);
     ProductType pType = ProductType::UNKNOWN;
     if (product == "UBAHN") {
         pType = ProductType::U_BAHN;
+        lineBackgroundColor = "#006cb3";
     } else if (product == "SBAHN") {
         pType = ProductType::S_BAHN;
+        lineBackgroundColor = "#408335";
     } else if (product == "BUS") {
         pType = ProductType::BUS;
+        lineBackgroundColor = "#00586a";
     } else if (product == "TRAM") {
         pType = ProductType::TRAM;
+        lineBackgroundColor = "#d82020";
     } else if (product == "REGIONAL_BUS") {
         pType = ProductType::REGIONAL_BUS;
+        lineBackgroundColor = "#00586a";
     } else {
-        SPDLOG_WARN("Unknown MVG product type '{}'.", product);
+        SPDLOG_WARN("Unknown MVG transport type '{}'.", product);
     }
 
     if (!j.contains("label")) {
@@ -53,9 +59,9 @@ std::shared_ptr<Departure> Departure::from_json(const nlohmann::json& j) {
     j.at("destination").get_to(destination);
 
     // Delay is optional:
-    int delay = 0;
-    if (j.contains("delay")) {
-        j.at("delay").get_to(delay);
+    int delayInMinutes = 0;
+    if (j.contains("delayInMinutes")) {
+        j.at("delayInMinutes").get_to(delayInMinutes);
     }
 
     if (!j.contains("cancelled")) {
@@ -65,19 +71,10 @@ std::shared_ptr<Departure> Departure::from_json(const nlohmann::json& j) {
     bool cancelled = false;
     j.at("cancelled").get_to(cancelled);
 
-    if (!j.contains("lineBackgroundColor")) {
-        SPDLOG_ERROR("Failed to parse departure. 'lineBackgroundColor' field missing.");
-        return nullptr;
+    int platform = 0;
+    if (j.contains("platform")) {
+        j.at("platform").get_to(platform);
     }
-    std::string lineBackgroundColor;
-    j.at("lineBackgroundColor").get_to(lineBackgroundColor);
-
-    if (!j.contains("platform")) {
-        SPDLOG_ERROR("Failed to parse departure. 'platform' field missing.");
-        return nullptr;
-    }
-    std::string platform;
-    j.at("platform").get_to(platform);
 
     // Is of type array:
     // if (!j.contains("infoMessages")) {
@@ -87,11 +84,11 @@ std::shared_ptr<Departure> Departure::from_json(const nlohmann::json& j) {
     // std::string infoMessages;
     // j.at("infoMessages").get_to(infoMessages);
 
-    return std::make_shared<Departure>(Departure{departureTimeTp,
+    return std::make_shared<Departure>(Departure{plannedDepartureTP,
                                                  pType,
                                                  label,
                                                  destination,
-                                                 delay,
+                                                 delayInMinutes,
                                                  cancelled,
                                                  lineBackgroundColor,
                                                  platform,
